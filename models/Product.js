@@ -13,8 +13,20 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: {
-        type: [String],
+    image1: {
+        type: String,
+        required: true,
+    },
+    image2: {
+        type: String,
+        required: true,
+    },
+    image3: {
+        type: String,
+        required: true,
+    },
+    image4: {
+        type: String,
         required: true,
     },
     category: {
@@ -25,8 +37,16 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    dimensions: {
-        type: [Number],
+    length: {
+        type: Number,
+        required: true,
+    },
+    breadth: {
+        type: Number,
+        required: true,
+    },
+    height: {
+        type: Number,
         required: true,
     },
 });

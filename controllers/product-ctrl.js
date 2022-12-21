@@ -27,25 +27,36 @@ exports.createProduct = async (req, res, next) => {
         name,
         price,
         description,
-        images,
+        image1,
+        image2,
+        image3,
+        image4,
         category,
         countInStock,
-        dimensions,
+        length,
+        breadth,
+        height,
     } = req.body;
     try {
         const product = new Product({
             name,
             price,
             description,
-            images,
+            image1,
+            image2,
+            image3,
+            image4,
             category,
             countInStock,
-            dimensions,
+            length,
+            breadth,
+            height,
         });
+        console.log(product);
         await product.save();
         res.status(201).json(product);
     } catch (err) {
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: err.message });
     }
 };
 
@@ -56,10 +67,15 @@ exports.updateProduct = async (req, res, next) => {
         name,
         price,
         description,
-        image,
+        image1,
+        image2,
+        image3,
+        image4,
         category,
         countInStock,
-        dimensions,
+        length,
+        breadth,
+        height,
     } = req.body;
     try {
         const product = await Product.findByIdAndUpdate(
@@ -68,10 +84,15 @@ exports.updateProduct = async (req, res, next) => {
                 name,
                 price,
                 description,
-                image,
+                image1,
+                image2,
+                image3,
+                image4,
                 category,
                 countInStock,
-                dimensions,
+                length,
+                breadth,
+                height,
             },
             { new: true }
         );
