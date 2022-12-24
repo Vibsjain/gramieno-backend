@@ -13,11 +13,12 @@ exports.getOrders = async (req, res, next) => {
 // GET /api/orders/:id
 exports.getOrder = async (req, res, next) => {
     const orderId = req.params.id;
+    console.log(orderId);
     try {
-        const order = await Order({ _id: orderId });
+        const order = await Order.find({ _id: orderId });
         res.status(200).json(order);
     } catch (err) {
-        res.status(500).json({ message: "Something went wrong" });
+        res.status(500).json({ message: err.message });
     }
 };
 
