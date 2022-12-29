@@ -59,15 +59,20 @@ exports.updateOrder = async (req, res, next) => {
         isDelivered,
         deliveredAt,
     } = req.body;
+    console.log(orderId, req.body);
     try {
-        const order = await Order({ _id: orderId });
-        order.orderItems = orderItems;
-        order.shippingAddress = shippingAddress;
-        order.orderDate = orderDate;
-        order.totalPrice = totalPrice;
-        order.isDelivered = isDelivered;
-        order.deliveredAt = deliveredAt;
-        await order.save();
+        const order = await Order.findByIdAndUpdate(
+            orderId,
+            {
+                orderItems,
+                shippingAddress,
+                orderDate,
+                totalPrice,
+                isDelivered,
+                deliveredAt,
+            },
+            { new: true }
+        );
         res.status(200).json(order);
     } catch (err) {
         res.status(500).json({ message: "Something went wrong" });
@@ -80,6 +85,24 @@ exports.deleteOrder = async (req, res, next) => {
     try {
         await Order.deleteOne({ _id: orderId });
         res.status(200).json({ message: "Order deleted" });
+    } catch (err) {
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
+//Change Delivery Status to true
+exports.changeOrderStatus = async (req, res, next) => {
+    const orderId = req.params.id;
+    try {
+        const order = await Order.findByIdAndUpdate(
+            orderId,
+            {
+                isDelivered: true,
+                deliveredAt: Date.now(),
+            },
+            { new: true }
+        );
+        res.status(200).json(order);
     } catch (err) {
         res.status(500).json({ message: "Something went wrong" });
     }
