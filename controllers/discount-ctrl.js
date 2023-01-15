@@ -71,9 +71,12 @@ exports.updateDiscountPercentByCategory = async (req, res, next) => {
 exports.toggleDiscountActiveStatusByCategory = async (req, res, next) => {
     const category = req.params.category;
     try {
-        const discount = await Discount.findOneAndUpdate(
+        const discount = await Discount.find({ category: category });
+        const status = discount[0].active;
+        console.log(discount);
+        await Discount.findOneAndUpdate(
             { category },
-            { active: !discount.active },
+            { active: !status },
             { new: true }
         );
         res.status(200).json({
