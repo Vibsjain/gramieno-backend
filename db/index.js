@@ -10,7 +10,7 @@ const connnect = (async) => {
             console.log(chalk.blue("DB is connected"));
         })
         .catch((err) => {
-            console.log(chalk.red("DB is not connected"));
+            console.log(chalk.red(`Database is not Connected. ${err.message}`));
         });
 };
 

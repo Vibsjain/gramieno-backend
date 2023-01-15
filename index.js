@@ -7,6 +7,7 @@ const chalk = require("chalk");
 const productRouter = require("./routes/product-router");
 const orderRouter = require("./routes/order-router");
 const contactRouter = require("./routes/contact-router");
+const discountRouter = require("./routes/discount-router");
 db();
 dotenv.config();
 const app = express();
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/contact", contactRouter);
+app.use("/api/discounts", discountRouter);
 app.listen(port, () => {
     console.log(chalk.blue(`Server is running on port ${port}`));
 });
