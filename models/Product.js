@@ -26,15 +26,15 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     length: {
-        type: Decimal128,
+        type: Number,
         required: true,
     },
     breadth: {
-        type: Decimal128,
+        type: Number,
         required: true,
     },
     height: {
-        type: Decimal128,
+        type: Number,
         required: true,
     },
 });
