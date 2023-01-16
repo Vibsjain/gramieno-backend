@@ -25,11 +25,12 @@ exports.getDiscountByCategory = async (req, res, next) => {
 
 // Create discount
 exports.createDiscount = async (req, res, next) => {
-    const { category, discountPercent, active } = req.body;
+    const { category, discountPercent, minPurchase, active } = req.body;
     try {
         const discount = new Discount({
             category,
             discountPercent,
+            minPurchase,
             active,
         });
         await discount.save();
@@ -42,17 +43,18 @@ exports.createDiscount = async (req, res, next) => {
     }
 };
 
-// Update discount Percent By Category
-exports.updateDiscountPercentByCategory = async (req, res, next) => {
+// Update discounts By Category
+exports.updateDiscountsByCategory = async (req, res, next) => {
     const category = req.params.category;
-    const { discountPercent } = req.body;
+    const { discountPercent, minPurchase } = req.body;
     try {
         const discount = await Discount.findOneAndUpdate(
             {
                 category,
             },
             {
-                discountPercent,
+                discountPercent: discountPercent,
+                minPurchase: minPurchase,
             },
             {
                 new: true,

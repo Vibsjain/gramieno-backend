@@ -9,6 +9,10 @@ const discountSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    minPurchase: {
+        type: Number,
+        required: true,
+    },
     active: {
         type: Boolean,
         required: true,

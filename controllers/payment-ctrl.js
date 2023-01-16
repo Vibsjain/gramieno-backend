@@ -1,14 +1,22 @@
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
 
 const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
     key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+exports.getKey = async (req, res) => {
+    res.json({
+        key: process.env.RAZORPAY_KEY_ID,
+    });
+};
+
 exports.checkout = async (req, res) => {
+    const { totalPrice } = req.body;
     try {
         const options = {
-            amount: req.body.amount * 100,
+            amount: totalPrice * 100,
             currency: "INR",
             receipt: "receipt_order_74394",
             payment_capture: 1,
@@ -20,4 +28,22 @@ exports.checkout = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+};
+
+exports.paymentVerification = async (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+        req.body;
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    const generated_signature = crypto.create.h
+        .mac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(body.toString())
+        .digest("hex");
+    if (generated_signature === razorpay_signature) {
+        res.json({
+            message: "Payment Success",
+        });
+    }
+    res.json({
+        message: "Payment Failed",
+    });
 };
