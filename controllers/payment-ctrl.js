@@ -31,21 +31,22 @@ exports.checkout = async (req, res) => {
 };
 
 exports.paymentVerification = async (req, res) => {
+    console.log(req.body);
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
         req.body;
     const body = razorpay_order_id + "|" + razorpay_payment_id;
-    const generated_signature = crypto
+    var expectedSignature = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
         .update(body.toString())
         .digest("hex");
-    if (generated_signature === razorpay_signature) {
-        res.json({
-            success: true,
-            message: "Payment Success",
-        });
+
+    console.log("sig received", razorpay_signature);
+    console.log("sig generated", expectedSignature);
+    if (expectedSignature === razorpay_signature) {
+        res.redirect(
+            `http://localhost:3000/payment-success?reference=${razorpay_payment_id}`
+        );
+    } else {
+        res.status(400).json({ signatureIsValid: "false" });
     }
-    res.json({
-        success: false,
-        message: "Payment Failed",
-    });
 };
