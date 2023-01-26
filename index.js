@@ -10,6 +10,7 @@ const orderRouter = require("./routes/order-router");
 const contactRouter = require("./routes/contact-router");
 const discountRouter = require("./routes/discount-router");
 const paymentRouter = require("./routes/payment-router");
+const CloudinaryRouter = require("./routes/cloudinary-router");
 db();
 dotenv.config();
 const app = express();
@@ -39,6 +40,7 @@ app.use("/api/orders", orderRouter);
 app.use("/api/contact", contactRouter);
 app.use("/api/discounts", discountRouter);
 app.use("/api/payment", paymentRouter);
+app.use("/api/cloudinary", CloudinaryRouter);
 app.listen(port, () => {
     console.log(chalk.blue(`Server is running on port ${port}`));
 });

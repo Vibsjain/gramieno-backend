@@ -29,6 +29,7 @@ exports.createProduct = async (req, res, next) => {
         price,
         description,
         images,
+        discount,
         category,
         countInStock,
         length,
@@ -41,13 +42,13 @@ exports.createProduct = async (req, res, next) => {
             price,
             description,
             images,
+            discount,
             category,
             countInStock,
             length,
             breadth,
             height,
         });
-        console.log(product);
         await product.save();
         res.status(201).json({
             success: true,
@@ -66,6 +67,7 @@ exports.updateProduct = async (req, res, next) => {
         price,
         description,
         images,
+        discount,
         category,
         countInStock,
         length,
@@ -80,6 +82,7 @@ exports.updateProduct = async (req, res, next) => {
                 price,
                 description,
                 images,
+                discount,
                 category,
                 countInStock,
                 length,
